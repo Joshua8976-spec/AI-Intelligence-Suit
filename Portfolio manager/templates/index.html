@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Movie Recommender</title>
+    <style>
+        /* Modern Dark Theme */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+        }
+        h1 { color: #e50914; font-size: 3rem; margin-bottom: 10px; }
+        .container { background: #262626; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 450px; text-align: center; }
+        input[type="text"] { width: 80%; padding: 12px; border-radius: 5px; border: none; margin-bottom: 20px; font-size: 1rem; }
+        button { background-color: #e50914; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1rem; }
+        button:hover { background-color: #b20710; }
+        .results-box { margin-top: 30px; text-align: left; }
+        .results-list { list-style: none; padding: 0; }
+        .results-list li { background: #333; margin: 10px 0; padding: 15px; border-radius: 8px; border-left: 5px solid #e50914; transition: 0.3s; }
+        .results-list li:hover { transform: scale(1.02); background: #444; }
+        .error { color: #ff4d4d; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+    <h1>🎬Movies Recommender</h1>
+    
+    <div class="container">
+        <p>What's a movie you love?</p>
+        <form action="/recommend" method="POST">
+            <input type="text" name="movie_name" placeholder="e.g. Inception, Avatar, Spectre..." required>
+            <br>
+            <button type="submit">Find Similar Movies</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if results %}
+            <div class="results-box">
+                <p>Since you liked <strong>{{ original_title }}</strong>, try these:</p>
+                <ul class="results-list">
+                    {% for movie in results %}
+                        <li>
+                            <div style="font-weight: bold; font-size: 1.2rem;">{{ movie.title }}</div>
+                            <div style="font-size: 0.8rem; color: #aaa;">Genres: {{ movie.genres }}</div>
+                            <div style="color: #ffcc00; font-size: 0.9rem;">⭐ {{ movie.rating }}/10</div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
