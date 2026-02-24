@@ -1,0 +1,8 @@
+flask
+pandas
+numpy
+torch
+yfinance
+scikit-learn
+nltk
+plotly
